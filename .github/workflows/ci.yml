@@ -1,0 +1,33 @@
+name: CI
+
+# Lean by design: typecheck + a wrangler dry-run build only. Skips docs-only
+# changes and cancels superseded runs so it stays fast and cheap.
+on:
+  push:
+    branches: [main]
+    paths-ignore: ["**.md", "LICENSE", ".github/ISSUE_TEMPLATE/**"]
+  pull_request:
+    paths-ignore: ["**.md", "LICENSE", ".github/ISSUE_TEMPLATE/**"]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+      - run: npm ci
+      - name: Typecheck
+        run: npm run typecheck
+      - name: Build (wrangler dry-run)
+        run: npm run build:bundle

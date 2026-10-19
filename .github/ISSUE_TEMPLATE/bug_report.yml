@@ -1,0 +1,52 @@
+name: 🐛 Bug report
+description: Something in the Lighthouse Worker / Durable Object isn't working
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report! For **security** issues, do not file here — see
+        [SECURITY.md](../blob/main/SECURITY.md).
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did you expect, and what happened instead?
+      placeholder: Deck reads returned 500 while the brain was offline…
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Deploy via `navig lighthouse deploy`
+        2. …
+    validations:
+      required: true
+  - type: input
+    id: deploy-path
+    attributes:
+      label: How did you deploy?
+      placeholder: "navig lighthouse deploy  |  wrangler deploy  |  prebuilt bundle"
+    validations:
+      required: false
+  - type: textarea
+    id: env
+    attributes:
+      label: Environment
+      description: Worker version/commit, wrangler version, Cloudflare plan (free/paid).
+      placeholder: |
+        commit: abc1234
+        wrangler: 4.65.0
+        plan: free
+    validations:
+      required: false
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: Relevant `wrangler tail` output. **Redact any keys/tokens.**
+      render: shell
+    validations:
+      required: false

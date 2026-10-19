@@ -1,0 +1,25 @@
+name: 💡 Feature request
+description: Suggest an improvement to the Lighthouse edge
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      placeholder: As a self-hoster, I want … so that …
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+    validations:
+      required: false
+  - type: checkboxes
+    id: invariants
+    attributes:
+      label: Design invariants
+      description: Lighthouse must stay secret-free and free-tier viable.
+      options:
+        - label: This keeps the edge **secret-free** (no NAVIG secrets/tokens on the Worker).
+        - label: This stays **free-tier viable** (any paid CF feature is optional/flagged).

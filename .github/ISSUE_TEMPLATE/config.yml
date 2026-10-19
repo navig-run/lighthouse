@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 🔒 Report a security vulnerability
+    url: https://github.com/navig-run/lighthouse/security/advisories/new
+    about: Please report security issues privately — never as a public issue. See SECURITY.md.
+  - name: 🧠 NAVIG core (brain / CLI)
+    url: https://github.com/navig-run/core/issues
+    about: For issues with the NAVIG brain, CLI, or `navig lighthouse deploy` itself.

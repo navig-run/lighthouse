@@ -1,0 +1,30 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "navig-lighthouse",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-02-12",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": { "enabled": true },
+
+  // workers.dev gives every deploy a free https://navig-lighthouse.<sub>.workers.dev
+  // URL — no custom domain needed. Telegram accepts workers.dev for setWebhook.
+  "workers_dev": true,
+
+  // The ONLY stateful binding: one BrainSocket DO per brain (named by
+  // sha256(api_key)). SQLite-backed DOs are free-plan eligible and hold the
+  // offline snapshot + replay queue, so deploying needs no D1/Queue
+  // provisioning — a single script upload via the Cloudflare REST API.
+  "durable_objects": {
+    "bindings": [{ "name": "BRAIN", "class_name": "BrainSocket" }]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["BrainSocket"] }]
+
+  // ── Optional hardening (Workers Paid), wired by `navig lighthouse deploy
+  //    --queues`. Not required: the DO-SQLite queue above already buffers
+  //    inbound work while the brain is offline. ──
+  // "queues": {
+  //   "producers": [{ "binding": "INBOUND", "queue": "navig-lighthouse-inbound" }],
+  //   "consumers": [{ "queue": "navig-lighthouse-inbound", "dead_letter_queue": "navig-lighthouse-dlq" }]
+  // },
+  // "r2_buckets": [{ "binding": "PAYLOADS", "bucket_name": "navig-lighthouse-payloads" }]
+}

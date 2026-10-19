@@ -1,0 +1,50 @@
+{
+  "name": "navig-lighthouse",
+  "version": "1.6.0",
+  "description": "NAVIG Lighthouse — self-hosted Cloudflare edge (Worker + Durable Object) that fronts one navig brain over an outbound WebSocket uplink. No tunnels.",
+  "type": "module",
+  "license": "Apache-2.0",
+  "author": "NAVIG",
+  "homepage": "https://github.com/navig-run/lighthouse#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/navig-run/lighthouse.git"
+  },
+  "bugs": {
+    "url": "https://github.com/navig-run/lighthouse/issues"
+  },
+  "keywords": [
+    "navig",
+    "cloudflare",
+    "cloudflare-workers",
+    "durable-objects",
+    "websocket",
+    "self-hosted",
+    "edge",
+    "reverse-tunnel",
+    "telegram-webhook"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "typecheck": "tsc --noEmit",
+    "cf-typegen": "wrangler types",
+    "build:bundle": "wrangler deploy --dry-run --outdir dist",
+    "ship:bundle": "wrangler deploy --dry-run --outdir dist && node -e \"require('fs').copyFileSync('dist/index.js','../../core/navig/cloud/lighthouse_worker/worker.js')\"",
+    "ship": "npm run typecheck && npm run ship:bundle",
+    "version:show": "node -e \"console.log('lighthouse v'+require('./package.json').version)\"",
+    "redeploy": "navig lighthouse redeploy",
+    "status": "navig lighthouse status"
+  },
+  "dependencies": {
+    "hono": "^4.13.13"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20261019.1",
+    "typescript": "^5.7.3",
+    "wrangler": "^4.151.2"
+  }
+}
